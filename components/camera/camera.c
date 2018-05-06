@@ -42,6 +42,9 @@
 #if CONFIG_OV7725_SUPPORT
 #include "ov7725.h"
 #endif
+#if CONFIG_OV7670_SUPPORT
+#include "ov7670.h"
+#endif
 
 #define ENABLE_TEST_PATTERN CONFIG_ENABLE_TEST_PATTERN
 
@@ -175,6 +178,13 @@ esp_err_t camera_probe(const camera_config_t* config, camera_model_t* out_camera
             ov7725_init(&s_state->sensor);
             break;
 #endif
+#if CONFIG_OV7670_SUPPORT
+        case OV7670_PID:
+            *out_camera_model = CAMERA_OV7670;
+            ov7670_init(&s_state->sensor);
+            break;
+#endif
+
         default:
             id->PID = 0;
             *out_camera_model = CAMERA_UNKNOWN;
